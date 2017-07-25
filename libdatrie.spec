@@ -4,7 +4,7 @@
 #
 Name     : libdatrie
 Version  : 0.2.10
-Release  : 3
+Release  : 4
 URL      : ftp://linux.thai.net/pub/thailinux/software/libthai/libdatrie-0.2.10.tar.xz
 Source0  : ftp://linux.thai.net/pub/thailinux/software/libthai/libdatrie-0.2.10.tar.xz
 Summary  : Double-array trie library
@@ -105,7 +105,11 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1494254544
+export SOURCE_DATE_EPOCH=1500994575
+export CFLAGS="$CFLAGS -Os -fdata-sections -ffunction-sections -fno-semantic-interposition "
+export FCFLAGS="$CFLAGS -Os -fdata-sections -ffunction-sections -fno-semantic-interposition "
+export FFLAGS="$CFLAGS -Os -fdata-sections -ffunction-sections -fno-semantic-interposition "
+export CXXFLAGS="$CXXFLAGS -Os -fdata-sections -ffunction-sections -fno-semantic-interposition "
 %configure --disable-static
 make V=1  %{?_smp_mflags}
 
@@ -125,7 +129,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1494254544
+export SOURCE_DATE_EPOCH=1500994575
 rm -rf %{buildroot}
 pushd ../build32/
 %make_install32
@@ -150,8 +154,6 @@ popd
 %defattr(-,root,root,-)
 /usr/share/doc/datrie/html/alpha-map_8h.html
 /usr/share/doc/datrie/html/annotated.html
-/usr/share/doc/datrie/html/arrowdown.png
-/usr/share/doc/datrie/html/arrowright.png
 /usr/share/doc/datrie/html/bc_s.png
 /usr/share/doc/datrie/html/bdwn.png
 /usr/share/doc/datrie/html/classes.html
@@ -172,6 +174,8 @@ popd
 /usr/share/doc/datrie/html/globals_type.html
 /usr/share/doc/datrie/html/index.html
 /usr/share/doc/datrie/html/jquery.js
+/usr/share/doc/datrie/html/menu.js
+/usr/share/doc/datrie/html/menudata.js
 /usr/share/doc/datrie/html/nav_f.png
 /usr/share/doc/datrie/html/nav_g.png
 /usr/share/doc/datrie/html/nav_h.png
