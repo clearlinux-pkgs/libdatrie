@@ -4,7 +4,7 @@
 #
 Name     : libdatrie
 Version  : 0.2.10
-Release  : 5
+Release  : 6
 URL      : ftp://linux.thai.net/pub/thailinux/software/libthai/libdatrie-0.2.10.tar.xz
 Source0  : ftp://linux.thai.net/pub/thailinux/software/libthai/libdatrie-0.2.10.tar.xz
 Summary  : Double-array trie library
