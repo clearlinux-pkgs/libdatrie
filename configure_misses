@@ -1,4 +1,2 @@
 Configure miss: locale_charset in -liconv
-Configure miss: i686-generic-linux-gnu-strip
-Configure miss: i686-generic-linux-gnu-mt
 Configure miss: locale_charset in -liconv

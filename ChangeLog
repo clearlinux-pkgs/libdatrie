@@ -1,3 +1,87 @@
+2018-04-23  Theppitak Karoonboonyanan  <theppitak@gmail.com>
+
+	* configure.ac:
+	  - Bump library revision to reflect code changes.
+
+	* NEWS:
+	=== Version 0.2.11 ===
+
+2018-04-21  Theppitak Karoonboonyanan  <theppitak@gmail.com>
+
+	Fix reported segfault on full-range alpha map
+
+	* tests/Makefile.am, +tests/test_byte_alpha.c:
+	  - Add test case
+	* datrie/alpha-map.c (alpha_map_recalc_work_area()):
+	  - Redeclare trie_last as TrieIndex, to prevent overflow.
+
+	Thanks Xiao Wang for the report, and @nevermatch for the analysis.
+
+	Closes: #6
+	https://github.com/tlwg/libdatrie/issues/6
+
+2018-03-29  Theppitak Karoonboonyanan  <theppitak@gmail.com>
+
+	Fix trie_state_get_data() at a prefix key
+
+	When getting data from a state which terminates a key that is
+	a prefix of another key, a terminator should be tried, so it
+	jumps from DA to TAIL, where we can get the data.
+
+	* tests/Makefile.am, +tests/test_term_state.c:
+	  - Add a test case with {'ab', 'abc'} dictionary, which fails previous
+	    code when retrieving data for key 'ab'.
+	* datrie/trie.c (trie_state_get_data()):
+	  - Instead of simply checking for leaf state, which only caught a state
+	    in TAIL, also try walking with a terminator when still in DA.
+	  - Replace 'leaf state' with 'terminal state' in documentation,
+	    for more clarity.
+	  - Also return error on null state pointer.
+
+	Thanks Filip Pytloun from the pytries project for the initial patch.
+
+2017-09-06  Theppitak Karoonboonyanan  <theppitak@gmail.com>
+
+	Revise description about search time complexity
+
+	* README:
+	  - Clarify that search time is O(m), where m is the key length,
+	    instead of O(1), while still claim that it's independent of
+	    database size.
+
+	This closes #4.
+	https://github.com/tlwg/libdatrie/issues/4
+
+2016-12-14  Theppitak Karoonboonyanan  <theppitak@gmail.com>
+
+	Include git-version-gen in tarball
+
+	* Makefile.am:
+	  - Add build-aux/git-version-gen to EXTRA_DIST.
+
+2016-09-21  Theppitak Karoonboonyanan  <theppitak@gmail.com>
+
+	Fix iconv() return value checking.
+
+	* tools/trietool.c (conv_to_alpha):
+	  - Check iconv() return value against (size_t) -1, rather than
+	    for its negativity, as size_t can be unsigned.
+
+	Thanks Daniel Macks for the report on Issue #3.
+	https://github.com/tlwg/libdatrie/issues/3
+
+2016-09-21  Theppitak Karoonboonyanan  <theppitak@gmail.com>
+
+	Use versioning based on Git snapshot.
+
+	* Makefile.am:
+	  - Add dist-hook to generate VERSION file on tarball generation.
+	* +build-aux/git-version-gen:
+	  - Add script to generate version based on 'git describe'
+	    if in git tree, or using VERSION file if in release tarball.
+	* configure.ac:
+	  - Call git-version-gen to get package version.
+
 2015-10-20  Theppitak Karoonboonyanan  <theppitak@gmail.com>
 
 	* configure.ac:
