@@ -4,16 +4,16 @@
 #
 Name     : libdatrie
 Version  : 0.2.12
-Release  : 8
+Release  : 9
 URL      : ftp://linux.thai.net/pub/thailinux/software/libthai/libdatrie-0.2.12.tar.xz
 Source0  : ftp://linux.thai.net/pub/thailinux/software/libthai/libdatrie-0.2.12.tar.xz
-Summary  : Double-array trie library
+Summary  : Implementation of double-array structure for representing trie, as proposed by Junichi Aoe.
 Group    : Development/Tools
 License  : LGPL-2.1
-Requires: libdatrie-bin
-Requires: libdatrie-lib
-Requires: libdatrie-license
-Requires: libdatrie-man
+Requires: libdatrie-bin = %{version}-%{release}
+Requires: libdatrie-lib = %{version}-%{release}
+Requires: libdatrie-license = %{version}-%{release}
+Requires: libdatrie-man = %{version}-%{release}
 BuildRequires : doxygen
 BuildRequires : gcc-dev32
 BuildRequires : gcc-libgcc32
@@ -30,8 +30,8 @@ as proposed by Junichi Aoe [1].
 %package bin
 Summary: bin components for the libdatrie package.
 Group: Binaries
-Requires: libdatrie-license
-Requires: libdatrie-man
+Requires: libdatrie-license = %{version}-%{release}
+Requires: libdatrie-man = %{version}-%{release}
 
 %description bin
 bin components for the libdatrie package.
@@ -40,9 +40,9 @@ bin components for the libdatrie package.
 %package dev
 Summary: dev components for the libdatrie package.
 Group: Development
-Requires: libdatrie-lib
-Requires: libdatrie-bin
-Provides: libdatrie-devel
+Requires: libdatrie-lib = %{version}-%{release}
+Requires: libdatrie-bin = %{version}-%{release}
+Provides: libdatrie-devel = %{version}-%{release}
 
 %description dev
 dev components for the libdatrie package.
@@ -51,9 +51,9 @@ dev components for the libdatrie package.
 %package dev32
 Summary: dev32 components for the libdatrie package.
 Group: Default
-Requires: libdatrie-lib32
-Requires: libdatrie-bin
-Requires: libdatrie-dev
+Requires: libdatrie-lib32 = %{version}-%{release}
+Requires: libdatrie-bin = %{version}-%{release}
+Requires: libdatrie-dev = %{version}-%{release}
 
 %description dev32
 dev32 components for the libdatrie package.
@@ -62,7 +62,7 @@ dev32 components for the libdatrie package.
 %package doc
 Summary: doc components for the libdatrie package.
 Group: Documentation
-Requires: libdatrie-man
+Requires: libdatrie-man = %{version}-%{release}
 
 %description doc
 doc components for the libdatrie package.
@@ -71,7 +71,7 @@ doc components for the libdatrie package.
 %package lib
 Summary: lib components for the libdatrie package.
 Group: Libraries
-Requires: libdatrie-license
+Requires: libdatrie-license = %{version}-%{release}
 
 %description lib
 lib components for the libdatrie package.
@@ -80,7 +80,7 @@ lib components for the libdatrie package.
 %package lib32
 Summary: lib32 components for the libdatrie package.
 Group: Default
-Requires: libdatrie-license
+Requires: libdatrie-license = %{version}-%{release}
 
 %description lib32
 lib32 components for the libdatrie package.
@@ -113,16 +113,20 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1530989422
-export CFLAGS="$CFLAGS -Os -fdata-sections -ffunction-sections -fno-semantic-interposition "
-export FCFLAGS="$CFLAGS -Os -fdata-sections -ffunction-sections -fno-semantic-interposition "
-export FFLAGS="$CFLAGS -Os -fdata-sections -ffunction-sections -fno-semantic-interposition "
-export CXXFLAGS="$CXXFLAGS -Os -fdata-sections -ffunction-sections -fno-semantic-interposition "
+export SOURCE_DATE_EPOCH=1547872753
+export AR=gcc-ar
+export RANLIB=gcc-ranlib
+export NM=gcc-nm
+export CFLAGS="$CFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition "
+export FCFLAGS="$CFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition "
+export FFLAGS="$CFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition "
+export CXXFLAGS="$CXXFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition "
 %configure --disable-static
 make  %{?_smp_mflags}
 
 pushd ../build32/
 export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
+export ASFLAGS="$ASFLAGS --32"
 export CFLAGS="$CFLAGS -m32"
 export CXXFLAGS="$CXXFLAGS -m32"
 export LDFLAGS="$LDFLAGS -m32"
@@ -135,12 +139,14 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
+cd ../build32;
+make VERBOSE=1 V=1 %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1530989422
+export SOURCE_DATE_EPOCH=1547872753
 rm -rf %{buildroot}
-mkdir -p %{buildroot}/usr/share/doc/libdatrie
-cp COPYING %{buildroot}/usr/share/doc/libdatrie/COPYING
+mkdir -p %{buildroot}/usr/share/package-licenses/libdatrie
+cp COPYING %{buildroot}/usr/share/package-licenses/libdatrie/COPYING
 pushd ../build32/
 %make_install32
 if [ -d  %{buildroot}/usr/lib32/pkgconfig ]
@@ -231,10 +237,10 @@ popd
 /usr/lib32/libdatrie.so.1.3.5
 
 %files license
-%defattr(-,root,root,-)
-/usr/share/doc/libdatrie/COPYING
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/libdatrie/COPYING
 
 %files man
-%defattr(-,root,root,-)
+%defattr(0644,root,root,0755)
 /usr/share/man/man1/trietool-0.2.1
 /usr/share/man/man1/trietool.1
