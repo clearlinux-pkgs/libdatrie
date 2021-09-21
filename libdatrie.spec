@@ -4,7 +4,7 @@
 #
 Name     : libdatrie
 Version  : 0.2.13
-Release  : 12
+Release  : 13
 URL      : https://github.com/tlwg/libdatrie/releases/download/v0.2.13/libdatrie-0.2.13.tar.xz
 Source0  : https://github.com/tlwg/libdatrie/releases/download/v0.2.13/libdatrie-0.2.13.tar.xz
 Summary  : Double-array trie library
@@ -114,15 +114,15 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1622849645
+export SOURCE_DATE_EPOCH=1632200232
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition "
-export FCFLAGS="$FFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition "
-export FFLAGS="$FFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition "
-export CXXFLAGS="$CXXFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition "
+export CFLAGS="$CFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=auto -fno-semantic-interposition "
+export FCFLAGS="$FFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=auto -fno-semantic-interposition "
+export FFLAGS="$FFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=auto -fno-semantic-interposition "
+export CXXFLAGS="$CXXFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=auto -fno-semantic-interposition "
 %configure --disable-static
 make  %{?_smp_mflags}
 
@@ -145,7 +145,7 @@ cd ../build32;
 make %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1622849645
+export SOURCE_DATE_EPOCH=1632200232
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/libdatrie
 cp %{_builddir}/libdatrie-0.2.13/COPYING %{buildroot}/usr/share/package-licenses/libdatrie/9a1929f4700d2407c70b507b3b2aaf6226a9543c
@@ -154,6 +154,12 @@ pushd ../build32/
 if [ -d  %{buildroot}/usr/lib32/pkgconfig ]
 then
 pushd %{buildroot}/usr/lib32/pkgconfig
+for i in *.pc ; do ln -s $i 32$i ; done
+popd
+fi
+if [ -d %{buildroot}/usr/share/pkgconfig ]
+then
+pushd %{buildroot}/usr/share/pkgconfig
 for i in *.pc ; do ln -s $i 32$i ; done
 popd
 fi
@@ -194,7 +200,7 @@ popd
 /usr/share/doc/datrie/html/dir_23cbef3b1b2df757deb7708cc4a2d793.html
 /usr/share/doc/datrie/html/doc.png
 /usr/share/doc/datrie/html/doxygen.css
-/usr/share/doc/datrie/html/doxygen.png
+/usr/share/doc/datrie/html/doxygen.svg
 /usr/share/doc/datrie/html/dynsections.js
 /usr/share/doc/datrie/html/files.html
 /usr/share/doc/datrie/html/folderclosed.png
