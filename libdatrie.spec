@@ -4,7 +4,7 @@
 #
 Name     : libdatrie
 Version  : 0.2.13
-Release  : 13
+Release  : 14
 URL      : https://github.com/tlwg/libdatrie/releases/download/v0.2.13/libdatrie-0.2.13.tar.xz
 Source0  : https://github.com/tlwg/libdatrie/releases/download/v0.2.13/libdatrie-0.2.13.tar.xz
 Summary  : Double-array trie library
@@ -114,7 +114,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1632200232
+export SOURCE_DATE_EPOCH=1663010891
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -127,7 +127,7 @@ export CXXFLAGS="$CXXFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-
 make  %{?_smp_mflags}
 
 pushd ../build32/
-export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
+export PKG_CONFIG_PATH="/usr/lib32/pkgconfig:/usr/share/pkgconfig"
 export ASFLAGS="${ASFLAGS}${ASFLAGS:+ }--32"
 export CFLAGS="${CFLAGS}${CFLAGS:+ }-m32 -mstackrealign"
 export CXXFLAGS="${CXXFLAGS}${CXXFLAGS:+ }-m32 -mstackrealign"
@@ -145,10 +145,10 @@ cd ../build32;
 make %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1632200232
+export SOURCE_DATE_EPOCH=1663010891
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/libdatrie
-cp %{_builddir}/libdatrie-0.2.13/COPYING %{buildroot}/usr/share/package-licenses/libdatrie/9a1929f4700d2407c70b507b3b2aaf6226a9543c
+cp %{_builddir}/libdatrie-%{version}/COPYING %{buildroot}/usr/share/package-licenses/libdatrie/9a1929f4700d2407c70b507b3b2aaf6226a9543c
 pushd ../build32/
 %make_install32
 if [ -d  %{buildroot}/usr/lib32/pkgconfig ]
@@ -194,11 +194,13 @@ popd
 /usr/share/doc/datrie/html/alpha-map_8h.html
 /usr/share/doc/datrie/html/annotated.html
 /usr/share/doc/datrie/html/bc_s.png
+/usr/share/doc/datrie/html/bc_sd.png
 /usr/share/doc/datrie/html/bdwn.png
 /usr/share/doc/datrie/html/classes.html
 /usr/share/doc/datrie/html/closed.png
 /usr/share/doc/datrie/html/dir_23cbef3b1b2df757deb7708cc4a2d793.html
 /usr/share/doc/datrie/html/doc.png
+/usr/share/doc/datrie/html/docd.png
 /usr/share/doc/datrie/html/doxygen.css
 /usr/share/doc/datrie/html/doxygen.svg
 /usr/share/doc/datrie/html/dynsections.js
@@ -216,19 +218,26 @@ popd
 /usr/share/doc/datrie/html/menu.js
 /usr/share/doc/datrie/html/menudata.js
 /usr/share/doc/datrie/html/nav_f.png
+/usr/share/doc/datrie/html/nav_fd.png
 /usr/share/doc/datrie/html/nav_g.png
 /usr/share/doc/datrie/html/nav_h.png
+/usr/share/doc/datrie/html/nav_hd.png
 /usr/share/doc/datrie/html/open.png
 /usr/share/doc/datrie/html/splitbar.png
+/usr/share/doc/datrie/html/splitbard.png
 /usr/share/doc/datrie/html/struct__Trie.html
 /usr/share/doc/datrie/html/struct__TrieIterator.html
 /usr/share/doc/datrie/html/struct__TrieState.html
 /usr/share/doc/datrie/html/sync_off.png
 /usr/share/doc/datrie/html/sync_on.png
 /usr/share/doc/datrie/html/tab_a.png
+/usr/share/doc/datrie/html/tab_ad.png
 /usr/share/doc/datrie/html/tab_b.png
+/usr/share/doc/datrie/html/tab_bd.png
 /usr/share/doc/datrie/html/tab_h.png
+/usr/share/doc/datrie/html/tab_hd.png
 /usr/share/doc/datrie/html/tab_s.png
+/usr/share/doc/datrie/html/tab_sd.png
 /usr/share/doc/datrie/html/tabs.css
 /usr/share/doc/datrie/html/trie_8h.html
 /usr/share/doc/datrie/html/triedefs_8h.html
